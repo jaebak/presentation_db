@@ -1,0 +1,19 @@
+<!-- jweb/templates/presentation_form.html -->
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Submit Presentation{% endblock %}
+
+{% block content %}
+    <h1 class="mt-4">Submit Presentation</h1>
+    <form method="post" enctype="multipart/form-data" class="form-horizontal">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a href="{% url 'presentation_list' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </div>
+    </form>
+{% endblock %}
