@@ -31,7 +31,7 @@ def save_pdf_url_to_file(pdf_url_link):
         counter += 1
 
     cookiejar = browser_cookie3.firefox(domain_name='cern.ch')
-    response = requests.get(pdf_url_link, cookies=cookiejar)
+    response = requests.get(pdf_url_link, cookies=cookiejar, verify=False)
     with open(file_path, 'wb') as file:
         file.write(response.content)
     return file_path
@@ -41,6 +41,11 @@ class PresentationListView(SingleTableMixin, FilterView):
     table_class = PresentationTable
     template_name = 'jpresent/presentation_list.html'
     filterset_class = PresentationFilter
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.order_by('-date')  # Orders by date descending
+
 
 class PresentationCreateView(CreateView):
     model = Presentation
